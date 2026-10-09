@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STORM OIL</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+body{background:#0f0f0f;color:#fff}
+.header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:#181818;border-bottom:1px solid #333}
+.logo{font-weight:900;letter-spacing:2px;font-size:28px;background:linear-gradient(90deg,#fff,#c79a5d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page{padding:24px;max-width:1100px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
+.card{background:#1c1c1c;border:1px solid #333;padding:22px;border-radius:12px;cursor:pointer;transition:.2s}
+.card:hover{border-color:#c79a5d;transform:translateY(-2px)}
+.modal{background:#1c1c1c;border:1px solid #444;border-radius:16px;padding:20px;margin-top:20px}
+.brand{display:flex;justify-content:space-between;padding:14px 16px;background:#222;border-radius:10px;margin-bottom:10px;cursor:pointer}
+.brand:hover{background:#2a2a2a}
+table{width:100%;border-collapse:collapse;margin-top:20px;background:#1a1a1a;border-radius:12px}
+th{text-align:left;padding:14px 8px;background:#222;color:#c79a5d;font-size:14px}
+td{padding:14px 8px;border-top:1px solid #2a2a2a}
+th:first-child,td:first-child{width:35px;text-align:center}
+th:nth-child(3),td:nth-child(3){width:65px;text-align:center}
+th:nth-child(4),td:nth-child(4){width:105px;white-space:nowrap;text-align:left}
+th:last-child,td:last-child{width:30px;text-align:center}
+.btn{padding:10px 18px;background:#c79a5d;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+.admin-bar{display:flex;gap:10px;margin:16px 0;flex-wrap:wrap}
+input{background:#222;border:1px solid #444;color:#fff;padding:8px 10px;border-radius:6px}
+.back{color:#c79a5d;cursor:pointer;margin-bottom:12px;display:inline-block}
+.del{color:#ff3333;font-size:22px;font-weight:900;background:none;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="logo">STORM OIL</div>
+<div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:8px 12px;border-radius:8px;cursor:pointer">Войти как админ</button></div>
+</div>
+<div class="page" id="app"></div>
+<script>
+let isAdmin = localStorage.getItem('storm_admin')==='1';
+let currentCat=null, currentBrand=null;
+const categories=[
+{id:1,name:'Моторное масло'},{id:2,name:'Дизельное масло'},{id:3,name:'Трансмиссионное масло'},{id:4,name:'Гидравлическое масло'},{id:5,name:'Компрессорное масло'},{id:6,name:'Автохимия'},{id:7,name:'Смазки'},{id:8,name:'Мото масло'}
+];
+const brandsByCat={
+1:['Total','Gazpromneft','Moil','Areca','Pemco'],
+2:['Gazpromneft Diesel','Total Rubia','Moil Diesel'],
+3:['Total Transmission','Areca Gear','Storm Gear'],
+4:['HLP-46','HVLP','Total Azolla'],
+5:['Dacnis','Total'],6:['Тосол','Антифриз','Очистители'],7:['Litolex','Storm Grease'],8:['Moto 4T','Moto 2T']
+};
+let products={
+'Total':[{id:1,name:'Масло моторное 5W-30 синтетическое',volume:'5 л',price:2450},{id:2,name:'Масло моторное 10W-40 полусинтетика',volume:'4 л',price:1890}],
+'Moil':[{id:3,name:'Moil 5W-40 Premium',volume:'5 л',price:2250}],
+'Areca':[{id:4,name:'Areca F5000 5W-30',volume:'5 л',price:2650}],
+'Gazpromneft':[{id:10,name:'Gazpromneft Premium 5W-40',volume:'5 л',price:2100},{id:11,name:'Gazpromneft 10W-40',volume:'4 л',price:1850}]
+};
+function getProductsForBrand(brand){
+  if(!products[brand]){
+    products[brand]=[
+      {id:Date.now()+1,name:`${brand} - 5W-30 синтетика`,volume:'5 л',price:2100},
+      {id:Date.now()+2,name:`${brand} - 10W-40 полусинтетика`,volume:'4 л',price:1950}
+    ];
+  }
+  return products[brand];
+}
+function renderCategories(){
+currentCat=null;currentBrand=null;
+document.getElementById('app').innerHTML=`<h1>Категории</h1><p style="color:#888;margin-top:6px">Выберите категорию • ${categories.length} категорий</p><div class="grid">${categories.map(c=>`<div class="card" onclick="openCategory(${c.id})">${c.name}</div>`).join('')}</div>`;
+}
+function openCategory(id){
+currentCat=categories.find(c=>c.id===id);
+const brands=brandsByCat[id]||[];
+document.getElementById('app').innerHTML=`<span class="back" onclick="renderCategories()">← Назад к категориям</span><h1>${currentCat.name}</h1><p style="color:#888">Бренды в этой категории</p><div class="modal">${brands.map(b=>`<div class="brand" onclick="openBrand('${b}')"><span>${b}</span><span>→</span></div>`).join('')}</div>`;
+}
+function openBrand(brand){
+currentBrand=brand;
+const list=getProductsForBrand(brand);
+document.getElementById('app').innerHTML=`<span class="back" onclick="openCategory(${currentCat.id})">← Назад к брендам</span><h1>${brand}</h1><p style="color:#888">Каталог товаров • ${list.length} позиций</p>${isAdmin?`<div class="admin-bar"><input id="newName" placeholder="Название товара"><input id="newVol" placeholder="Объем" style="width:90px"><input id="newPrice" placeholder="Цена" style="width:90px"><button class="btn" onclick="addProd()">+ Добавить</button></div>`:''}<table><thead><tr><th>№</th><th>Название товара</th><th>Объем</th><th>Цена</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>${list.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.volume}</td><td style="white-space:nowrap">${isAdmin?`<input value="${p.price}" onchange="updatePrice('${brand}',${p.id},this.value)" style="width:55px">`:p.price+' ₸'}</td>${isAdmin?`<td><button class="del" onclick="delProd('${brand}',${p.id})">✕</button></td>`:''}</tr>`).join('')}</tbody></table>`;
+}
+function toggleAdmin(){
+ if(!isAdmin){
+   let login = prompt("Логин:");
+   if(login === null) return;
+   let pass = prompt("Пароль:");
+   if(pass === null) return;
+   if(login === "admin" && pass === "Storm123"){
+     isAdmin = true;
+     localStorage.setItem('storm_admin','1');
+     alert("✅ Вход выполнен!");
+   } else {
+     alert("❌ Неверный логин или пароль!\nЛогин: admin\nПароль: Storm123");
+     return;
+   }
+ } else {
+   isAdmin = false;
+   localStorage.setItem('storm_admin','0');
+ }
+ document.getElementById('adminBtn').innerText=isAdmin?'Выйти из админки':'Войти как админ';
+ if(currentBrand) openBrand(currentBrand); else if(currentCat) openCategory(currentCat.id); else renderCategories();
+}
+window.onload=()=>{
+if(isAdmin) document.getElementById('adminBtn').innerText='Выйти из админки';
+renderCategories();
+};
+function addProd(){
+const nameEl=document.getElementById('newName');
+const volEl=document.getElementById('newVol');
+const priceEl=document.getElementById('newPrice');
+const name=nameEl.value.trim(), vol=volEl.value.trim(), price=parseInt(priceEl.value);
+if(!name) return alert('Введите название');
+const list=getProductsForBrand(currentBrand);
+list.push({id:Date.now(),name,volume:vol||'5 л',price:price||0});
+openBrand(currentBrand);
+}
+function delProd(brand,id){products[brand]=products[brand].filter(p=>p.id!==id);openBrand(brand);}
+function updatePrice(brand,id,val){const p=products[brand].find(x=>x.id===id);if(p) p.price=val;}
+</script>
+</body>
+</html>
