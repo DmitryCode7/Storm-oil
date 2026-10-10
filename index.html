@@ -6,35 +6,37 @@
 <title>STORM OIL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-body{background:#0f0f0f;color:#fff}
-.header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:#181818;border-bottom:1px solid #333}
-.logo{font-weight:900;letter-spacing:2px;font-size:28px;background:linear-gradient(90deg,#fff,#c79a5d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.page{padding:24px;max-width:1100px;margin:0 auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
-.card{background:#1c1c1c;border:1px solid #333;padding:22px;border-radius:12px;cursor:pointer;transition:.2s;position:relative}
-.card:hover{border-color:#c79a5d;transform:translateY(-2px)}
-.modal{background:#1c1c1c;border:1px solid #444;border-radius:16px;padding:20px;margin-top:20px}
-.brand{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#222;border-radius:10px;margin-bottom:10px;cursor:pointer}
+body{background:#0f0f0f;color:#fff;font-size:13px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#181818;border-bottom:1px solid #333}
+.logo{font-weight:900;letter-spacing:1.5px;font-size:22px;background:linear-gradient(90deg,#fff,#c79a5d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page{padding:16px;max-width:1100px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:14px}
+.card{background:#1c1c1c;border:1px solid #333;padding:14px;border-radius:10px;cursor:pointer;transition:.2s;position:relative;font-size:13px}
+.card:hover{border-color:#c79a5d;transform:translateY(-1px)}
+.modal{background:#1c1c1c;border:1px solid #444;border-radius:12px;padding:14px;margin-top:14px}
+.brand{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#222;border-radius:8px;margin-bottom:6px;cursor:pointer;font-size:13px}
 .brand:hover{background:#2a2a2a}
-table{width:100%;border-collapse:collapse;margin-top:20px;background:#1a1a1a;border-radius:12px}
-th{text-align:left;padding:14px 8px;background:#222;color:#c79a5d;font-size:14px}
-td{padding:14px 8px;border-top:1px solid #2a2a2a}
-th:first-child,td:first-child{width:35px;text-align:center}
-th:nth-child(3),td:nth-child(3){width:65px;text-align:center}
-th:nth-child(4),td:nth-child(4){width:105px;white-space:nowrap;text-align:left}
-th:last-child,td:last-child{width:30px;text-align:center}
-.btn{padding:10px 18px;background:#c79a5d;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer}
-.admin-bar{display:flex;gap:10px;margin:16px 0;flex-wrap:wrap}
-input{background:#222;border:1px solid #444;color:#fff;padding:10px 12px;border-radius:6px}
-.back{color:#c79a5d;cursor:pointer;margin-bottom:12px;display:inline-block}
-.del{color:#ff3333;font-size:22px;font-weight:900;background:none;border:none;cursor:pointer}
-.del-cat{position:absolute;top:6px;right:8px;background:#2a2a2a;border:none;color:#ff4444;width:26px;height:26px;border-radius:50%;cursor:pointer;font-weight:900}
+table{width:100%;border-collapse:collapse;margin-top:12px;background:#1a1a1a;border-radius:10px;overflow:hidden}
+th{text-align:left;padding:8px 6px;background:#222;color:#c79a5d;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+td{padding:7px 6px;border-top:1px solid #2a2a2a;font-size:13px}
+th:first-child,td:first-child{width:30px;text-align:center}
+th:nth-child(3),td:nth-child(3){width:55px;text-align:center}
+th:nth-child(4),td:nth-child(4){width:80px;text-align:left}
+th:last-child,td:last-child{width:28px;text-align:center}
+.btn{padding:7px 12px;background:#c79a5d;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:12px}
+.admin-bar{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+input{background:#222;border:1px solid #444;color:#fff;padding:6px 8px;border-radius:5px;font-size:12px}
+.back{color:#c79a5d;cursor:pointer;margin-bottom:8px;display:inline-block;font-size:12px}
+.del{color:#ff3333;font-size:18px;font-weight:900;background:none;border:none;cursor:pointer}
+.del-cat{position:absolute;top:4px;right:6px;background:#2a2a2a;border:none;color:#ff4444;width:20px;height:20px;border-radius:50%;cursor:pointer;font-weight:900;font-size:12px}
+h1{font-size:18px}
+p{font-size:12px}
 </style>
 </head>
 <body>
 <div class="header">
 <div class="logo">STORM OIL</div>
-<div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:8px 12px;border-radius:8px;cursor:pointer">Войти как админ</button></div>
+<div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div>
 </div>
 <div class="page" id="app"></div>
 <script>
@@ -53,7 +55,6 @@ const defaultBrands={
 let categories = JSON.parse(localStorage.getItem('storm_cats') || JSON.stringify(defaultCategories));
 let brandsByCat = JSON.parse(localStorage.getItem('storm_brands') || JSON.stringify(defaultBrands));
 let products = JSON.parse(localStorage.getItem('storm_products') || '{}');
-
 function saveAll(){
   localStorage.setItem('storm_brands', JSON.stringify(brandsByCat));
   localStorage.setItem('storm_products', JSON.stringify(products));
@@ -72,8 +73,8 @@ function getProductsForBrand(brand){
 function renderCategories(){
 currentCat=null;currentBrand=null;
 document.getElementById('app').innerHTML=`
-<h1>Категории</h1><p style="color:#888;margin-top:6px">Выберите категорию • ${categories.length} категорий</p>
-${isAdmin?`<div class="admin-bar"><input id="newCat" placeholder="Новая категория, напр. Тормозная жидкость"><button class="btn" onclick="addCategory()">+ Добавить категорию</button></div>`:''}
+<h1>Категории</h1><p style="color:#888;margin-top:4px">Выберите категорию • ${categories.length} категорий</p>
+${isAdmin?`<div class="admin-bar"><input id="newCat" placeholder="Новая категория"><button class="btn" onclick="addCategory()">+ Добавить категорию</button></div>`:''}
 <div class="grid">${categories.map(c=>`<div class="card"><div onclick="openCategory(${c.id})">${c.name}</div>${isAdmin?`<button class="del-cat" onclick="delCategory(${c.id})">✕</button>`:''}</div>`).join('')}</div>`;
 }
 function addCategory(){
@@ -87,7 +88,7 @@ function addCategory(){
   renderCategories();
 }
 function delCategory(id){
-  if(!confirm('Удалить категорию? Все бренды в ней тоже удалятся.')) return;
+  if(!confirm('Удалить категорию?')) return;
   categories=categories.filter(c=>c.id!==id);
   delete brandsByCat[id];
   saveAll();
@@ -97,8 +98,8 @@ function openCategory(id){
 currentCat=categories.find(c=>c.id===id);
 const brands=brandsByCat[id]||[];
 document.getElementById('app').innerHTML=`<span class="back" onclick="renderCategories()">← Назад к категориям</span><h1>${currentCat.name}</h1><p style="color:#888">Бренды в этой категории</p>
-${isAdmin?`<div class="admin-bar"><input id="newBrand" placeholder="Новый бренд, напр. SHELL"><button class="btn" onclick="addBrand()">+ Добавить бренд</button></div>`:''}
-<div class="modal">${brands.length?brands.map(b=>`<div class="brand"><span onclick="openBrand('${b}')" style="flex:1">${b}</span><span onclick="openBrand('${b}')">→</span>${isAdmin?`<button class="del" onclick="delBrand('${b}')" style="margin-left:10px">✕</button>`:''}</div>`).join(''):`<p style="color:#888">Нет брендов. Добавь первый.</p>`}</div>`;
+${isAdmin?`<div class="admin-bar"><input id="newBrand" placeholder="Новый бренд"><button class="btn" onclick="addBrand()">+ Добавить бренд</button></div>`:''}
+<div class="modal">${brands.length?brands.map(b=>`<div class="brand"><span onclick="openBrand('${b}')" style="flex:1">${b}</span><span onclick="openBrand('${b}')">→</span>${isAdmin?`<button class="del" onclick="delBrand('${b}')" style="margin-left:8px">✕</button>`:''}</div>`).join(''):`<p style="color:#888">Нет брендов.</p>`}</div>`;
 }
 function addBrand(){
   const el=document.getElementById('newBrand');
@@ -119,7 +120,7 @@ function delBrand(brand){
 function openBrand(brand){
 currentBrand=brand;
 const list=getProductsForBrand(brand);
-document.getElementById('app').innerHTML=`<span class="back" onclick="openCategory(${currentCat.id})">← Назад к брендам</span><h1>${brand}</h1><p style="color:#888">Каталог товаров • ${list.length} позиций</p>${isAdmin?`<div class="admin-bar"><input id="newName" placeholder="Название товара"><input id="newVol" placeholder="Объем" style="width:90px"><input id="newPrice" placeholder="Цена" style="width:90px"><button class="btn" onclick="addProd()">+ Добавить</button></div>`:''}<table><thead><tr><th>№</th><th>Название товара</th><th>Объем</th><th>Цена</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>${list.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.volume}</td><td style="white-space:nowrap">${isAdmin?`<input value="${p.price}" onchange="updatePrice('${brand}',${p.id},this.value)" style="width:55px">`:p.price+' ₸'}</td>${isAdmin?`<td><button class="del" onclick="delProd('${brand}',${p.id})">✕</button></td>`:''}</tr>`).join('')}</tbody></table>`;
+document.getElementById('app').innerHTML=`<span class="back" onclick="openCategory(${currentCat.id})">← Назад к брендам</span><h1>${brand}</h1><p style="color:#888">Каталог товаров • ${list.length} позиций</p>${isAdmin?`<div class="admin-bar"><input id="newName" placeholder="Название товара"><input id="newVol" placeholder="Объем" style="width:70px"><input id="newPrice" placeholder="Цена" style="width:70px"><button class="btn" onclick="addProd()">+ Добавить</button></div>`:''}<table><thead><tr><th>№</th><th>Название товара</th><th>Объем</th><th>Цена</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>${list.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.volume}</td><td style="white-space:nowrap">${isAdmin?`<input value="${p.price}" onchange="updatePrice('${brand}',${p.id},this.value)" style="width:50px">`:p.price+' ₸'}</td>${isAdmin?`<td><button class="del" onclick="delProd('${brand}',${p.id})">✕</button></td>`:''}</tr>`).join('')}</tbody></table>`;
 }
 function toggleAdmin(){
  if(!isAdmin){
