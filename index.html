@@ -10,141 +10,50 @@ body{background:#0f0f0f;color:#fff;font-size:13px}
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#181818;border-bottom:1px solid #333}
 .logo{font-weight:900;letter-spacing:1.5px;font-size:22px;background:linear-gradient(90deg,#fff,#c79a5d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .page{padding:16px;max-width:1100px;margin:0 auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:14px}
-.card{background:#1c1c1c;border:1px solid #333;padding:14px;border-radius:10px;cursor:pointer;transition:.2s;position:relative;font-size:13px}
-.card:hover{border-color:#c79a5d;transform:translateY(-1px)}
-.modal{background:#1c1c1c;border:1px solid #444;border-radius:12px;padding:14px;margin-top:14px}
-.brand{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#222;border-radius:8px;margin-bottom:6px;cursor:pointer;font-size:13px}
-.brand:hover{background:#2a2a2a}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:14px}
+/* КАРТОЧКА СТАЛА МЕНЬШЕ, А ИКОНКА БОЛЬШЕ */
+.card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#1c1c1c;border:1px solid #333;padding:12px 10px;border-radius:12px;cursor:pointer;transition:.25s;position:relative;min-height:105px}
+.card:hover{border-color:#c79a5d;transform:translateY(-2px);background:#222;box-shadow:0 6px 15px rgba(0,0,0,.4)}
+.icon{font-size:54px;margin-bottom:8px;line-height:1}
+.cat-name{font-weight:700;font-size:13px}
+.brand-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}
+.brand-header h1{margin:0;flex:1;font-size:20px}
+.back-small{background:#222;border:1px solid #333;color:#c79a5d;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:5px;margin-top:8px}
+.brand-card{background:#1c1c1c;border:1px solid #333;padding:9px 6px;border-radius:10px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;transition:.2s;position:relative;min-height:40px;display:flex;align-items:center;justify-content:center}
+.brand-card:hover{border-color:#c79a5d;background:#222}
 table{width:100%;border-collapse:collapse;margin-top:12px;background:#1a1a1a;border-radius:10px;overflow:hidden}
-th{text-align:left;padding:8px 6px;background:#222;color:#c79a5d;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+th{text-align:left;padding:8px 6px;background:#222;color:#c79a5d;font-size:11px;text-transform:uppercase}
 td{padding:7px 6px;border-top:1px solid #2a2a2a;font-size:13px}
-th:first-child,td:first-child{width:30px;text-align:center}
-th:nth-child(3),td:nth-child(3){width:55px;text-align:center}
-th:nth-child(4),td:nth-child(4){width:80px;text-align:left}
-th:last-child,td:last-child{width:28px;text-align:center}
 .btn{padding:7px 12px;background:#c79a5d;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:12px}
 .admin-bar{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
 input{background:#222;border:1px solid #444;color:#fff;padding:6px 8px;border-radius:5px;font-size:12px}
-.back{color:#c79a5d;cursor:pointer;margin-bottom:8px;display:inline-block;font-size:12px}
-.del{color:#ff3333;font-size:18px;font-weight:900;background:none;border:none;cursor:pointer}
-.del-cat{position:absolute;top:4px;right:6px;background:#2a2a2a;border:none;color:#ff4444;width:20px;height:20px;border-radius:50%;cursor:pointer;font-weight:900;font-size:12px}
-h1{font-size:18px}
-p{font-size:12px}
+.del{color:#ff3333;font-size:14px;font-weight:900;background:none;border:none;cursor:pointer;position:absolute;top:3px;right:4px;background:#2a2a2a;width:16px;height:16px;border-radius:50%;line-height:1}
+.del-cat{position:absolute;top:6px;right:7px;background:#2a2a2a;border:none;color:#ff4444;width:22px;height:22px;border-radius:50%;cursor:pointer;font-weight:900;font-size:12px}
 </style>
 </head>
 <body>
-<div class="header">
-<div class="logo">STORM OIL</div>
-<div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div>
-</div>
+<div class="header"><div class="logo">STORM OIL</div><div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div></div>
 <div class="page" id="app"></div>
 <script>
 let isAdmin = localStorage.getItem('storm_admin')==='1';
 let currentCat=null, currentBrand=null;
-const defaultCategories=[
-{id:1,name:'Моторное масло'},{id:2,name:'Дизельное масло'},{id:3,name:'Трансмиссионное масло'},{id:4,name:'Гидравлическое масло'},{id:5,name:'Компрессорное масло'},{id:6,name:'Автохимия'},{id:7,name:'Смазки'},{id:8,name:'Мото масло'}
-];
-const defaultBrands={
-1:['Total','Gazpromneft','Moil','Areca','Pemco'],
-2:['Gazpromneft Diesel','Total Rubia','Moil Diesel'],
-3:['Total Transmission','Areca Gear','Storm Gear'],
-4:['HLP-46','HVLP','Total Azolla'],
-5:['Dacnis','Total'],6:['Тосол','Антифриз','Очистители'],7:['Litolex','Storm Grease'],8:['Moto 4T','Moto 2T']
-};
+const defaultCategories=[{id:1,name:'Моторное масло',icon:'🛢️'},{id:2,name:'Дизельное масло',icon:'🚛'},{id:3,name:'Трансмиссионное масло',icon:'⚙️'},{id:4,name:'Гидравлическое масло',icon:'💧'},{id:5,name:'Компрессорное масло',icon:'🌀'},{id:6,name:'Автохимия',icon:'🧪'},{id:7,name:'Смазки',icon:'🧴'},{id:8,name:'Мото масло',icon:'🏍️'},{id:9,name:'Антифриз',icon:'❄️'}];
+const defaultBrands={1:['Total','Gazpromneft','Moil','Areca','Pemco'],2:['Gazpromneft Diesel','Total Rubia','Moil Diesel'],3:['Total Transmission','Areca Gear','Storm Gear'],4:['HLP-46','HVLP','Total Azolla'],5:['Dacnis','Total'],6:['Тосол','Очистители','Тормозная жидкость'],7:['Litolex','Storm Grease'],8:['Moto 4T','Moto 2T'],9:['Felix','SinTec','Luxe','Nord','Total Glacelf','Gazpromneft Антифриз']};
 let categories = JSON.parse(localStorage.getItem('storm_cats') || JSON.stringify(defaultCategories));
 let brandsByCat = JSON.parse(localStorage.getItem('storm_brands') || JSON.stringify(defaultBrands));
 let products = JSON.parse(localStorage.getItem('storm_products') || '{}');
-function saveAll(){
-  localStorage.setItem('storm_brands', JSON.stringify(brandsByCat));
-  localStorage.setItem('storm_products', JSON.stringify(products));
-  localStorage.setItem('storm_cats', JSON.stringify(categories));
-}
-function getProductsForBrand(brand){
-  if(!products[brand]){
-    products[brand]=[
-      {id:Date.now()+1,name:`${brand} - 5W-30 синтетика`,volume:'5 л',price:2100},
-      {id:Date.now()+2,name:`${brand} - 10W-40 полусинтетика`,volume:'4 л',price:1950}
-    ];
-    saveAll();
-  }
-  return products[brand];
-}
-function renderCategories(){
-currentCat=null;currentBrand=null;
-document.getElementById('app').innerHTML=`
-<h1>Категории</h1><p style="color:#888;margin-top:4px">Выберите категорию • ${categories.length} категорий</p>
-${isAdmin?`<div class="admin-bar"><input id="newCat" placeholder="Новая категория"><button class="btn" onclick="addCategory()">+ Добавить категорию</button></div>`:''}
-<div class="grid">${categories.map(c=>`<div class="card"><div onclick="openCategory(${c.id})">${c.name}</div>${isAdmin?`<button class="del-cat" onclick="delCategory(${c.id})">✕</button>`:''}</div>`).join('')}</div>`;
-}
-function addCategory(){
-  const el=document.getElementById('newCat');
-  const name=el.value.trim();
-  if(!name) return alert('Введи название категории');
-  const newId = categories.length? Math.max(...categories.map(c=>c.id))+1 : 1;
-  categories.push({id:newId, name});
-  brandsByCat[newId]=[];
-  saveAll();
-  renderCategories();
-}
-function delCategory(id){
-  if(!confirm('Удалить категорию?')) return;
-  categories=categories.filter(c=>c.id!==id);
-  delete brandsByCat[id];
-  saveAll();
-  renderCategories();
-}
-function openCategory(id){
-currentCat=categories.find(c=>c.id===id);
-const brands=brandsByCat[id]||[];
-document.getElementById('app').innerHTML=`<span class="back" onclick="renderCategories()">← Назад к категориям</span><h1>${currentCat.name}</h1><p style="color:#888">Бренды в этой категории</p>
-${isAdmin?`<div class="admin-bar"><input id="newBrand" placeholder="Новый бренд"><button class="btn" onclick="addBrand()">+ Добавить бренд</button></div>`:''}
-<div class="modal">${brands.length?brands.map(b=>`<div class="brand"><span onclick="openBrand('${b}')" style="flex:1">${b}</span><span onclick="openBrand('${b}')">→</span>${isAdmin?`<button class="del" onclick="delBrand('${b}')" style="margin-left:8px">✕</button>`:''}</div>`).join(''):`<p style="color:#888">Нет брендов.</p>`}</div>`;
-}
-function addBrand(){
-  const el=document.getElementById('newBrand');
-  const name=el.value.trim();
-  if(!name) return alert('Введи название бренда');
-  if(!brandsByCat[currentCat.id]) brandsByCat[currentCat.id]=[];
-  if(brandsByCat[currentCat.id].includes(name)) return alert('Такой бренд уже есть');
-  brandsByCat[currentCat.id].push(name);
-  saveAll();
-  openCategory(currentCat.id);
-}
-function delBrand(brand){
-  if(!confirm(`Удалить бренд ${brand}?`)) return;
-  brandsByCat[currentCat.id]=brandsByCat[currentCat.id].filter(b=>b!==brand);
-  saveAll();
-  openCategory(currentCat.id);
-}
-function openBrand(brand){
-currentBrand=brand;
-const list=getProductsForBrand(brand);
-document.getElementById('app').innerHTML=`<span class="back" onclick="openCategory(${currentCat.id})">← Назад к брендам</span><h1>${brand}</h1><p style="color:#888">Каталог товаров • ${list.length} позиций</p>${isAdmin?`<div class="admin-bar"><input id="newName" placeholder="Название товара"><input id="newVol" placeholder="Объем" style="width:70px"><input id="newPrice" placeholder="Цена" style="width:70px"><button class="btn" onclick="addProd()">+ Добавить</button></div>`:''}<table><thead><tr><th>№</th><th>Название товара</th><th>Объем</th><th>Цена</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>${list.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.volume}</td><td style="white-space:nowrap">${isAdmin?`<input value="${p.price}" onchange="updatePrice('${brand}',${p.id},this.value)" style="width:50px">`:p.price+' ₸'}</td>${isAdmin?`<td><button class="del" onclick="delProd('${brand}',${p.id})">✕</button></td>`:''}</tr>`).join('')}</tbody></table>`;
-}
-function toggleAdmin(){
- if(!isAdmin){
-   let login = prompt("Логин:"); if(login === null) return;
-   let pass = prompt("Пароль:"); if(pass === null) return;
-   if(login === "admin" && pass === "Storm123"){
-     isAdmin = true; localStorage.setItem('storm_admin','1'); alert("✅ Вход выполнен!");
-   } else { alert("❌ Неверный логин или пароль!"); return; }
- } else { isAdmin = false; localStorage.setItem('storm_admin','0'); }
- document.getElementById('adminBtn').innerText=isAdmin?'Выйти из админки':'Войти как админ';
- if(currentBrand) openBrand(currentBrand); else if(currentCat) openCategory(currentCat.id); else renderCategories();
-}
-window.onload=()=>{
-if(isAdmin) document.getElementById('adminBtn').innerText='Выйти из админки';
-renderCategories();
-};
-function addProd(){
-const nameEl=document.getElementById('newName'); const volEl=document.getElementById('newVol'); const priceEl=document.getElementById('newPrice');
-const name=nameEl.value.trim(), vol=volEl.value.trim(), price=parseInt(priceEl.value);
-if(!name) return alert('Введите название');
-const list=getProductsForBrand(currentBrand);
-list.push({id:Date.now(),name,volume:vol||'5 л',price:price||0});
-saveAll(); openBrand(currentBrand);
-}
+function saveAll(){localStorage.setItem('storm_brands', JSON.stringify(brandsByCat));localStorage.setItem('storm_products', JSON.stringify(products));localStorage.setItem('storm_cats', JSON.stringify(categories));}
+function getProductsForBrand(brand){if(!products[brand]){if(['Felix','SinTec','Luxe','Nord','Total Glacelf','Gazpromneft Антифриз'].includes(brand)){products[brand]=[{id:Date.now()+1,name:`${brand} G12 красный -40°C`,volume:'5 кг',price:3500},{id:Date.now()+2,name:`${brand} G11 зеленый -40°C`,volume:'10 кг',price:5800}];} else {products[brand]=[{id:Date.now()+1,name:`${brand} - 5W-30 синтетика`,volume:'5 л',price:2100},{id:Date.now()+2,name:`${brand} - 10W-40 полусинтетика`,volume:'4 л',price:1950}];}saveAll();}return products[brand];}
+function renderCategories(){currentCat=null;currentBrand=null;document.getElementById('app').innerHTML=`<h1>Категории</h1><p style="color:#888;margin-top:4px">Выберите категорию • ${categories.length} категорий</p>${isAdmin?`<div class="admin-bar"><input id="newCat" placeholder="Новая категория"><button class="btn" onclick="addCategory()">+ Добавить</button></div>`:''}<div class="grid">${categories.map(c=>`<div class="card" onclick="openCategory(${c.id})"><div class="icon">${c.icon||'📦'}</div><div class="cat-name">${c.name}</div>${isAdmin?`<button class="del-cat" onclick="event.stopPropagation();delCategory(${c.id})">✕</button>`:''}</div>`).join('')}</div>`;}
+function addCategory(){const el=document.getElementById('newCat');const name=el.value.trim();if(!name) return alert('Введи название');const newId = categories.length? Math.max(...categories.map(c=>c.id))+1 : 1;categories.push({id:newId, name, icon:'📦'});brandsByCat[newId]=[];saveAll();renderCategories();}
+function delCategory(id){if(!confirm('Удалить категорию?')) return;categories=categories.filter(c=>c.id!==id);delete brandsByCat[id];saveAll();renderCategories();}
+function openCategory(id){currentCat=categories.find(c=>c.id===id);const brands=brandsByCat[id]||[];document.getElementById('app').innerHTML=`<div class="brand-header"><h1>${currentCat.icon||''} ${currentCat.name}</h1><div class="back-small" onclick="renderCategories()">← к категориям</div></div><p style="color:#888;margin-bottom:8px">Выберите бренд • ${brands.length} брендов</p>${isAdmin?`<div class="admin-bar"><input id="newBrand" placeholder="Новый бренд"><button class="btn" onclick="addBrand()">+ Добавить бренд</button></div>`:''}<div class="brand-grid">${brands.map(b=>`<div class="brand-card" onclick="openBrand('${b}')">${b}${isAdmin?`<button class="del" onclick="event.stopPropagation();delBrand('${b}')">✕</button>`:''}</div>`).join('')}</div>${!brands.length?`<p style="color:#666;margin-top:20px;text-align:center">Нет брендов</p>`:''}`;}
+function addBrand(){const el=document.getElementById('newBrand');const name=el.value.trim();if(!name) return;if(!brandsByCat[currentCat.id]) brandsByCat[currentCat.id]=[];if(brandsByCat[currentCat.id].includes(name)) return alert('Уже есть');brandsByCat[currentCat.id].push(name);saveAll();openCategory(currentCat.id);}
+function delBrand(brand){if(!confirm(`Удалить ${brand}?`)) return;brandsByCat[currentCat.id]=brandsByCat[currentCat.id].filter(b=>b!==brand);saveAll();openCategory(currentCat.id);}
+function openBrand(brand){currentBrand=brand;const list=getProductsForBrand(brand);document.getElementById('app').innerHTML=`<div class="brand-header"><h1>${brand}</h1><div class="back-small" onclick="openCategory(${currentCat.id})">← к брендам</div></div><table><thead><tr><th>№</th><th>Название</th><th>Объем</th><th>Цена</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>${list.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.volume}</td><td>${isAdmin?`<input value="${p.price}" onchange="updatePrice('${brand}',${p.id},this.value)" style="width:50px">`:p.price+' ₸'}</td>${isAdmin?`<td><button class="del" style="position:static" onclick="delProd('${brand}',${p.id})">✕</button></td>`:''}</tr>`).join('')}</tbody></table>`;}
+function toggleAdmin(){if(!isAdmin){let l=prompt("Логин:");if(l===null) return;let p=prompt("Пароль:");if(p===null) return;if(l==="admin" && p==="Storm123"){isAdmin=true;localStorage.setItem('storm_admin','1');} else {alert("❌ Неверно");return;}} else {isAdmin=false;localStorage.setItem('storm_admin','0');}document.getElementById('adminBtn').innerText=isAdmin?'Выйти':'Войти как админ';if(currentBrand) openBrand(currentBrand); else if(currentCat) openCategory(currentCat.id); else renderCategories();}
+window.onload=()=>{if(isAdmin) document.getElementById('adminBtn').innerText='Выйти';renderCategories();};
 function delProd(brand,id){products[brand]=products[brand].filter(p=>p.id!==id);saveAll();openBrand(brand);}
 function updatePrice(brand,id,val){const p=products[brand].find(x=>x.id===id);if(p){p.price=val; saveAll();}}
 </script>
