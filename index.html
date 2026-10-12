@@ -83,7 +83,7 @@ function openBrand(brand){
   currentBrand=brand;
   const key=currentCat.id+'_'+brand;
   if(!store.products[key]){
-    store.products[key]=[{id:Date.now(),name:`${brand} - 5W-30 синтетика`,volume:'5 л',price:2100},{id:Date.now()+1,name:`${brand} - 10W-40`,volume:'4 л',price:1950}];
+    store.products[key]=[];
     save();
   }
   const list=store.products[key];
