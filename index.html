@@ -65,7 +65,7 @@ async function load(){
  }
  renderCategories();
  ref.onSnapshot(s=>{
-   if(s.exists()){ store=s.data();
+   if(s.exists){ store=s.data();
      if(!currentCat &&!currentBrand) renderCategories();
    }
  });
