@@ -33,7 +33,7 @@ input{background:#222;border:1px solid #444;color:#fff;padding:6px 8px;border-ra
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-<div class="header"><div class="logo">STORM OIL <span class="online">● ONLINE</span></div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div>
+<div class="header"><div style="display:flex;align-items:center"><div class="logo">STORM OIL <span class="online">● ONLINE</span></div><div id="filterTab">ФИЛЬТРА</div></div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div>
 <div class="page" id="app">Загрузка базы...</div>
 <script>
 const firebaseConfig = {
