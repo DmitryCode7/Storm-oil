@@ -28,12 +28,14 @@ td{padding:7px 6px;border-top:1px solid #2a2a2a;font-size:13px}
 input{background:#222;border:1px solid #444;color:#fff;padding:6px 8px;border-radius:5px;font-size:12px}
 .del{position:absolute;top:3px;right:4px;background:#2a2a2a;border:none;color:#ff4444;width:16px;height:16px;border-radius:50%;cursor:pointer;font-weight:900}
 .online{font-size:10px;color:#00ff88;margin-left:8px}
+#filterTab{margin-left:16px;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:1px solid #333;background:#1f1f1f;color:#888;letter-spacing:0.5px}
+#filterTab.active{background:#c79a5d;color:#000;border-color:#c79a5d}
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-<div class="header"><div style="display:flex;align-items:center"><div class="logo">STORM OIL <span class="online">● ONLINE</span></div><div id="filterTab">ФИЛЬТРА</div></div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Войти как админ</button></div>
+<div class="header"><div style="display:flex;align-items:center"><div class="logo">STORM OIL <span class="online">● ONLINE</span></div><div id="filterTab">ФИЛЬТРА</div></div><button onclick="toggleAdmin()" id="adminBtn" style="background:none;border:1px solid #444;color:#aaa;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px">Адм</button></div>
 <div class="page" id="app">Загрузка базы...</div>
 <script>
 const firebaseConfig = {
